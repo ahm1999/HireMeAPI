@@ -13,6 +13,7 @@ namespace HireMeAPI.BLL
             services.AddTransient<IPasswordHasher,PasswordHasher>();
             services.AddTransient<ITokenService, TokentService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IResumeServic, ResumeService>();
         
         
         }

@@ -1,4 +1,5 @@
-﻿namespace HireMeAPI.DAL.Entities
+﻿
+namespace HireMeAPI.DAL.Entities
 {
     public class User
     {
@@ -7,6 +8,11 @@
         public string? passwordHash { get; set; }
 
         public string? Email { get; set; }
+
+        
+        public ICollection<Resume>? Resumes { get; set; }
+
+        public ICollection<Experience>? Experiences { get; set; }
 
 
     }
