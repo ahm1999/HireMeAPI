@@ -3,7 +3,7 @@ using HireMeAPI.DTOs;
 
 namespace HireMeAPI.BLL.interfaces
 {
-    public interface IResumeServic
+    public interface IResumeService
     {
         public Task<ResumeServiceRespoonse> AddResumeAsync(AddResumeDTO resumeDTO);
         public Task<ResumeServiceRespoonse> DeleteAsync(Guid ResumeId);

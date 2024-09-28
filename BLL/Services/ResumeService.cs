@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace HireMeAPI.BLL.Services
 {
-    public class ResumeService : IResumeServic
+    public class ResumeService : IResumeService
     {
         private readonly AppDbContext _context;
         private readonly IUserService _userService;

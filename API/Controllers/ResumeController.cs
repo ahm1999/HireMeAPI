@@ -10,8 +10,8 @@ namespace HireMeAPI.API.Controllers
     public class ResumeController : ControllerBase
     {
 
-        private readonly IResumeServic _resumeServic;
-        public ResumeController(IResumeServic resumeServic)
+        private readonly IResumeService _resumeServic;
+        public ResumeController(IResumeService resumeServic)
         {
             _resumeServic = resumeServic;
         }
