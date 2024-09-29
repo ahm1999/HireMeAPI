@@ -2,6 +2,7 @@
 using HireMeAPI.DAL;
 using HireMeAPI.DAL.Entities;
 using HireMeAPI.DTOs;
+using HireMeAPI.utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,13 @@ namespace HireMeAPI.BLL.Services
         private readonly ITokenService _tokenService;
         private readonly IHttpContextAccessor _accessor;
         private readonly ILogger<UserService> _logger;
-        public UserService(AppDbContext context,IPasswordHasher passwordHasher, ITokenService tokenService, IHttpContextAccessor accessor,ILogger<UserService> logger)
+        private readonly IRoleService _roleService;
+        public UserService(AppDbContext context,
+                           IPasswordHasher passwordHasher,
+                           ITokenService tokenService,
+                           IHttpContextAccessor accessor,
+                           ILogger<UserService> logger,
+                           IRoleService roleService )
         {
 
             _context = context;
@@ -28,6 +35,7 @@ namespace HireMeAPI.BLL.Services
             _tokenService = tokenService;
             _accessor = accessor;
             _logger = logger;
+            _roleService = roleService;
         }
         public async Task<Guid> CreateUserAccountAsync(SignUpDTO userData)
         {
@@ -47,6 +55,7 @@ namespace HireMeAPI.BLL.Services
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+            await _roleService.AddUserToRole(UserId, RolesConsts.USER);
             return UserId;
         }
 
@@ -65,7 +74,9 @@ namespace HireMeAPI.BLL.Services
                 return new LogInResponse(false, "wrong password", string.Empty);
             }
 
-            var token =  _tokenService.CreateToken(user);
+            var roleServiceRes = await _roleService.GetUserRoles(user.Id);
+
+            var token =  _tokenService.CreateToken(user,roleServiceRes.roles);
 
             return new LogInResponse(true, "Loggend in", token);
 

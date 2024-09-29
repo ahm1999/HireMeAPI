@@ -4,6 +4,7 @@ using HireMeAPI.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeAPI.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240929105941_AddUserRoles")]
+    partial class AddUserRoles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,7 +53,7 @@ namespace HireMeAPI.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Experience", (string)null);
+                    b.ToTable("Experience");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.ExperienceWorkFields", b =>
@@ -68,7 +71,7 @@ namespace HireMeAPI.DAL.Migrations
 
                     b.HasIndex("WorkField_Id");
 
-                    b.ToTable("ExperienceWorkFields", (string)null);
+                    b.ToTable("ExperienceWorkFields");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.Resume", b =>
@@ -93,7 +96,7 @@ namespace HireMeAPI.DAL.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Resumes", (string)null);
+                    b.ToTable("Resumes");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.Role", b =>
@@ -107,7 +110,7 @@ namespace HireMeAPI.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.User", b =>
@@ -127,7 +130,7 @@ namespace HireMeAPI.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.UserRole", b =>
@@ -142,7 +145,7 @@ namespace HireMeAPI.DAL.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserRoles", (string)null);
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.WorkFields", b =>
@@ -159,7 +162,7 @@ namespace HireMeAPI.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("WorkFields", (string)null);
+                    b.ToTable("WorkFields");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.Experience", b =>

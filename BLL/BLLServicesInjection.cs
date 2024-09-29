@@ -15,6 +15,7 @@ namespace HireMeAPI.BLL
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IResumeService, ResumeService>();
             services.AddScoped<IExperienceService, ExperienceService>();
+            services.AddScoped<IRoleService, RoleService>();
 
         
         

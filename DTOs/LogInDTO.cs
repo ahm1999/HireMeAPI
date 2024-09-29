@@ -6,9 +6,9 @@ namespace HireMeAPI.DTOs
     {
         [Required]
         [EmailAddress]
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
         [Required]
-        public string? password { get; set; }
+        public string password { get; set; }
     }
 }

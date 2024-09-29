@@ -4,6 +4,6 @@ namespace HireMeAPI.BLL.interfaces
 {
     public interface ITokenService
     {
-        public string CreateToken(User user);
+        public string CreateToken(User user,List<UserRole> roles);
     }
 }
