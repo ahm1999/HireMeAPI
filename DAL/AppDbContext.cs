@@ -17,6 +17,9 @@ namespace HireMeAPI.DAL
 
         public DbSet<Role> Roles { get; set;  }
 
+        public DbSet<WorkFields> WorkFields { get; set; }  
+        
+        public DbSet<ExperienceWorkFields> ExperienceWorkFields { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
     }
 }

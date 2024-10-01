@@ -34,7 +34,6 @@ builder.Services.AddAuthorization();
 
 builder.Services.RegisterBLLServices(builder.Configuration);
 builder.Services.RegisterDALServices(builder.Configuration);
-builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

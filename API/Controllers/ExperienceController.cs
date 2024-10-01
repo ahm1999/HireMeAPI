@@ -7,5 +7,6 @@ namespace HireMeAPI.API.Controllers
     [ApiController]
     public class ExperienceController : ControllerBase
     {
+         
     }
 }
