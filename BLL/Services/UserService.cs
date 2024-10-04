@@ -63,7 +63,7 @@ namespace HireMeAPI.BLL.Services
 
         public async Task<LogInResponse> LogInAsync(LogInDTO userData)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u .Email == userData.Email);
+            var user = await _context.Users.Include(u => u.userRoles).ThenInclude(ur =>ur.Role_).FirstOrDefaultAsync(u => u .Email == userData.Email);
 
             if (user == null) {
                 return new LogInResponse(false, "No account with that email exists", string.Empty);
@@ -74,9 +74,9 @@ namespace HireMeAPI.BLL.Services
                 return new LogInResponse(false, "wrong password", string.Empty);
             }
 
-            var roleServiceRes = await _roleService.GetUserRoles(user.Id);
-
-            var token =  _tokenService.CreateToken(user,roleServiceRes.roles);
+            //var roleServiceRes = await _roleService.GetUserRoles(user.Id);
+             
+            var token =  _tokenService.CreateToken(user,user.userRoles.ToList());
 
             return new LogInResponse(true, "Loggend in", token);
 

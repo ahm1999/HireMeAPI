@@ -9,11 +9,10 @@ namespace HireMeAPI.DAL.Entities
         [ForeignKey(nameof(Experience))]
         public Guid ExperienceId { get; set; }
 
-        [ForeignKey(nameof(WorkFields))]
         public Guid WorkFieldId { get; set;  }
 
         public Experience Experience_ { get; set;  }
 
-        public WorkFields WorkField_ { get; set; }
+        public WorkFields WorkField { get; set; }
     }
 }

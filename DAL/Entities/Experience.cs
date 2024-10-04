@@ -1,4 +1,6 @@
-﻿namespace HireMeAPI.DAL.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HireMeAPI.DAL.Entities
 {
     public class Experience
     {
@@ -13,6 +15,10 @@
         public DateOnly StartedFrom { get; set; }
 
         public DateOnly WorkedUntill { get; set; }
+
+        [ForeignKey(nameof(User))]
+        public Guid UserId { get; set; }
+        public User _User { get; set; }
 
         public ICollection<ExperienceWorkFields> WorkFields { get; set;  }        
 

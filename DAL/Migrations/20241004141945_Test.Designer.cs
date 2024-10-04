@@ -4,6 +4,7 @@ using HireMeAPI.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeAPI.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241004141945_Test")]
+    partial class Test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,9 +64,12 @@ namespace HireMeAPI.DAL.Migrations
                     b.Property<Guid>("WorkFieldId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("WorkField_Id")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("ExperienceId", "WorkFieldId");
 
-                    b.HasIndex("WorkFieldId");
+                    b.HasIndex("WorkField_Id");
 
                     b.ToTable("ExperienceWorkFields");
                 });
@@ -178,15 +184,13 @@ namespace HireMeAPI.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HireMeAPI.DAL.Entities.WorkFields", "WorkField")
+                    b.HasOne("HireMeAPI.DAL.Entities.WorkFields", "WorkField_")
                         .WithMany("ExperienceWorkFields")
-                        .HasForeignKey("WorkFieldId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WorkField_Id");
 
                     b.Navigation("Experience_");
 
-                    b.Navigation("WorkField");
+                    b.Navigation("WorkField_");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.Resume", b =>
