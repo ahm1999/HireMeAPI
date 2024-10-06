@@ -49,9 +49,12 @@ namespace HireMeAPI.BLL.Services
 
         }
 
-        public Task<ExpericeServiceResponse> GetUserExperience()
+        public async Task<ExpericeServiceResponse> GetUserExperience(Guid UserId)
         {
-            throw new NotImplementedException();
+            var _Experience  = await _context.Experiences.Where(e => e.UserId == UserId).ToListAsync();
+
+            return new ExpericeServiceResponse(true, "User Experience Found", _Experience);
+
         }
 
         public Task<ExpericeServiceResponse> GetUserExperienceInWorkField(Guid WorkfieldId)
@@ -59,9 +62,19 @@ namespace HireMeAPI.BLL.Services
             throw new NotImplementedException();
         }
 
-        public Task<ExpericeServiceResponse> RemoveUserExperience(Guid ExperienceId)
+        public async Task<ExpericeServiceResponse> RemoveUserExperience(Guid ExperienceId)
         {
-            throw new NotImplementedException();
+            Guid UserId = _userService.GetUserId();
+            var _experience = await _context.Experiences.FirstOrDefaultAsync(e => e.Id == ExperienceId && e.UserId == UserId);
+            if (_experience == null) {
+                return new ExpericeServiceResponse(false, "Experience not found or Unauthorized");
+            }
+
+            _context.Experiences.Remove(_experience);
+            await _context.SaveChangesAsync();
+
+            return new ExpericeServiceResponse(true, "experience removed Succesfully");
+            
         }
 
         private async Task<List<ExperienceWorkFields>> ExperienceWorkFieldsListAsync(List<Guid> WorkFieldGuids,Guid _ExperiencId) {

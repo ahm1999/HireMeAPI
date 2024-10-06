@@ -1,8 +1,6 @@
 ﻿using HireMeAPI.BLL.interfaces;
 using HireMeAPI.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HireMeAPI.API.Controllers
@@ -29,5 +27,34 @@ namespace HireMeAPI.API.Controllers
             }
             return Ok(response);
         }
+
+        [HttpGet("UserExperience/{UserId:guid}")]
+        public async Task<IActionResult> UserExperience([FromRoute] Guid UserId) {
+            var response = await _experienceService.GetUserExperience(UserId);
+
+            if (!response.success)
+            {
+                return BadRequest(response.messege);
+            }
+            return Ok(response);
+
+
+        }
+
+        [Authorize]
+        [HttpDelete("RemoveExperience/{ExperienceId:guid}")]
+
+        public async Task<IActionResult> RemoveUserExperience([FromRoute]  Guid ExperienceId) {
+
+            var response = await _experienceService.RemoveUserExperience(ExperienceId);
+
+            if (!response.success)
+            {
+                return BadRequest(response.messege);
+            }
+            return Ok(response);
+
+        }
+
     }
 }
