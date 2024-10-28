@@ -17,6 +17,8 @@ namespace HireMeAPI.BLL
             services.AddScoped<IExperienceService, ExperienceService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IWorkFieldService, WorkFieldService>();
+            services.AddScoped<IApplicationService, ApplicationService>();
+            services.AddScoped<IJobPostingService, JobPostingService>();
 
         
         

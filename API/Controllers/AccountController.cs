@@ -28,12 +28,30 @@ namespace HireMeAPI.API.Controllers
             {
                 return BadRequest(new ResponseStatusDTO() { Status = "Failed" , Messege = ModelState.ToString()}); // Return the view with validation errors
             }
-            var Res = await _userService.CreateUserAccountAsync(userData);
+            var Res = await _userService.CreateUserAccountAsync(userData,false);
 
             if (Res == Guid.Empty) return BadRequest("account with that id already created");
 
             return Ok(new ResponseStatusDTO() { Status = "Success", Messege = "Account created" });
         }
+
+
+        [HttpPost("SignUpRecruiter")]
+
+        public async Task<ActionResult<ResponseStatusDTO>> SignUpAsRecruiter(SignUpDTO userData)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ResponseStatusDTO() { Status = "Failed", Messege = ModelState.ToString() }); // Return the view with validation errors
+            }
+            var Res = await _userService.CreateUserAccountAsync(userData, true);
+
+            if (Res == Guid.Empty) return BadRequest("account with that id already created");
+
+            return Ok(new ResponseStatusDTO() { Status = "Success", Messege = "Recruiter Account created" });
+        }
+
 
 
         [HttpPost("LogIn")]

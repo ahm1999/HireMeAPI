@@ -3,8 +3,8 @@
     public interface IPasswordHasher
     {
 
-        public string HashPassword(string password);
+        public Task<string> HashPassword(string password);
 
-        public bool verfyPassword(string password, string hashPassword);
+        public Task<bool> verfyPassword(string password, string hashPassword);
     }
 }

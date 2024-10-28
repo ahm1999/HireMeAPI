@@ -37,14 +37,14 @@ namespace HireMeAPI.BLL.Services
             _logger = logger;
             _roleService = roleService;
         }
-        public async Task<Guid> CreateUserAccountAsync(SignUpDTO userData)
+        public async Task<Guid> CreateUserAccountAsync(SignUpDTO userData, bool IsRecruiter)
         {
             Guid UserId = Guid.NewGuid();
             if (await _context.Users.AnyAsync(u => u.Email == userData.Email)) {
                 return Guid.Empty;
             }
 
-            string _passwordHash = _passwordHasher.HashPassword(userData.Password??" ");
+            string _passwordHash = await _passwordHasher.HashPassword(userData.Password??" ");
             User user = new User()
             {
                 Id = UserId,
@@ -55,7 +55,15 @@ namespace HireMeAPI.BLL.Services
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
-            await _roleService.AddUserToRole(UserId, RolesConsts.USER);
+
+            if (IsRecruiter)
+            {
+                await _roleService.AddUserToRole(UserId, RolesConsts.RECRUITER);
+            }
+            else
+            {
+                await _roleService.AddUserToRole(UserId, RolesConsts.USER);
+            }
             return UserId;
         }
 
@@ -63,13 +71,13 @@ namespace HireMeAPI.BLL.Services
 
         public async Task<LogInResponse> LogInAsync(LogInDTO userData)
         {
-            var user = await _context.Users.Include(u => u.userRoles).ThenInclude(ur =>ur.Role_).FirstOrDefaultAsync(u => u .Email == userData.Email);
+            var user = await _context.Users.AsNoTracking().Include(u => u.userRoles).ThenInclude(ur => ur.Role_).Where(u => u.Email == userData.Email).FirstAsync();
 
             if (user == null) {
                 return new LogInResponse(false, "No account with that email exists", string.Empty);
             }
 
-            if (!_passwordHasher.verfyPassword(userData.password?? string.Empty, user.passwordHash ?? string.Empty)) {
+            if (!await _passwordHasher.verfyPassword(userData.password?? string.Empty, user.passwordHash ?? string.Empty)) {
 
                 return new LogInResponse(false, "wrong password", string.Empty);
             }

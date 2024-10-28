@@ -81,6 +81,7 @@ namespace HireMeAPI.API.Controllers
 
             var response = await _roleService.AddRole(RolesConsts.ADMIN);
             var roleresponse = await _roleService.AddRole(RolesConsts.USER);
+            await _roleService.AddRole(RolesConsts.RECRUITER);
 
             if (response.Success && roleresponse.Success)
             {

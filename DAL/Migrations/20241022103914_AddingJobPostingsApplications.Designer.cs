@@ -4,6 +4,7 @@ using HireMeAPI.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HireMeAPI.DAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241022103914_AddingJobPostingsApplications")]
+    partial class AddingJobPostingsApplications
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,14 +33,9 @@ namespace HireMeAPI.DAL.Migrations
                     b.Property<Guid>("JobPostingId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ResumeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("UserId", "JobPostingId");
 
                     b.HasIndex("JobPostingId");
-
-                    b.HasIndex("ResumeId");
 
                     b.ToTable("Applications");
                 });
@@ -209,12 +207,6 @@ namespace HireMeAPI.DAL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HireMeAPI.DAL.Entities.Resume", "resume")
-                        .WithMany()
-                        .HasForeignKey("ResumeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HireMeAPI.DAL.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -224,8 +216,6 @@ namespace HireMeAPI.DAL.Migrations
                     b.Navigation("JobPosting");
 
                     b.Navigation("User");
-
-                    b.Navigation("resume");
                 });
 
             modelBuilder.Entity("HireMeAPI.DAL.Entities.Experience", b =>

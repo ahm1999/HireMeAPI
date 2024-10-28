@@ -7,15 +7,24 @@ namespace HireMeAPI.BLL.Services
 {
     public class PasswordHasher : IPasswordHasher
     {
-        public string HashPassword(string password)
+        public Task<string> HashPassword(string password)
         {
-            var passwordHash = BC.HashPassword(password);
-            return passwordHash;
+            return Task<string>.Run(() =>
+            {
+                var passwordHash = BC.HashPassword(password);
+                return passwordHash;
+
+
+            });
+            
         }
 
-        public bool verfyPassword(string password, string passwordHash)
+        public Task<bool> verfyPassword(string password, string passwordHash)
         {
-            return BC.Verify(password, passwordHash);
+            return Task.Run<bool>(() =>
+            {
+                return BC.Verify(password, passwordHash);
+            });
         }
     }
 }

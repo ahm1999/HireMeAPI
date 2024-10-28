@@ -7,7 +7,7 @@ namespace HireMeAPI.BLL.interfaces
 {
     public interface IUserService
     {
-        public Task<Guid> CreateUserAccountAsync(SignUpDTO userData);
+        public Task<Guid> CreateUserAccountAsync(SignUpDTO userData,bool IsRecruiter);
 
         public Task<LogInResponse> LogInAsync(LogInDTO userData);
 
